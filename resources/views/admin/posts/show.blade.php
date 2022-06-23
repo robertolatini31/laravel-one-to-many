@@ -8,6 +8,9 @@
             <img src="{{$post->img}}" alt="">
             <h1 class="display-3">{{$post->title}}</h1>
         </div>
+        <div class="metadata py-3">
+            Categoria: {{$post->category ? $post->category->name : 'Nessuna'}}
+        </div>
         <p class="lead py-4">{{$post->content}}</p>
         <hr class="my-2">
         <p class="lead">

@@ -19,6 +19,15 @@
     <div id="contenthelp" class="form-text">Inserire la descrizione del fumetto</div>
   </div>
   <div class="mb-3">
+    <label for="category_id" class="form-label">Categoria</label>
+    <select class="form-control @error('category_id') is-invalid @enderror" name="category_id" id="category_id">
+      <option value="">Scegli una categoria</option>
+        @foreach($categories as $category)
+          <option value="{{$category->id}}">{{$category->name}}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="mb-3">
     <label for="img" class="form-label">Image</label>
     <input type="text" class="form-control" name="img" id="img" aria-describedby="imghelp" value="{{old('img')}}">
     <div id="imghelp" class="form-text">Inserire Immagine del post</div>
