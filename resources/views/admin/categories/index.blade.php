@@ -34,9 +34,17 @@
                     @forelse($categories as $category)
                         <tr>
                             <th scope="row">{{$category->id}}</th>
-                            <td>{{$category->name}}</td>
-                            <td>{{$category->slug}}</td>
                             <td>
+                                <form action="{{route('admin.categories.update', $category->slug)}}" method="post" id="category-{{$category->id}}">
+                                @csrf
+                                @method('PATCH')
+                                <input class="border-0 bg-transparent" type="text" name="name" value="{{$category->name}}">
+                                </form>
+                            </td>
+                            <td>{{$category->slug}}</td>
+                            <!-- actions  -->
+                            <td>
+                                <button form="category-{{$category->id}}" type="submit" class="btn btn-primary">Update</button>
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-danger m-1" data-toggle="modal" data-target="#delete-category-{{$category->slug}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">

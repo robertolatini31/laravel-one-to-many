@@ -38,18 +38,6 @@ class CategoryController extends Controller
         return redirect()->back()->with('message', "Category $slug Added Successfully");
     }
 
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -59,7 +47,13 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $validated_data = $request->validate([
+            'name' => ['required', Rule::unique('categories')->ignore('categories'), 'max:50']
+        ]);
+        $slug = Str::slug($request->name, '-');
+        $validated_data['slug'] = $slug;
+        $category->update($validated_data);
+        return redirect()->back()->with('message', "Categoria $slug Modificata");
     }
 
     /**
