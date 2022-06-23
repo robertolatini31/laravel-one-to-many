@@ -25,7 +25,7 @@ class PostRequest extends FormRequest
     {
         //dd($this->post['title']);
         return [
-            'title' => ['required', Rule::unique('posts')->ignore($this->post['title'])],
+            'title' => ['required', Rule::unique('posts')->ignore($this->post), 'max:50'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'content' => ['nullable'],
             'img' => ['nullable'],
