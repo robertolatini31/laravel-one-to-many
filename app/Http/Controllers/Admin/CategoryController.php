@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 class CategoryController extends Controller
 {
     /**
@@ -15,18 +16,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::orderByDesc('id')->get();
+        return view('admin.categories.index', compact('categories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,19 +29,15 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_data = $request->validate([
+            'name' => ['required', Rule::unique('categories')->ignore('categories'), 'max:50']
+        ]);
+        $slug = Str::slug($request->name, '-');
+        $validated_data['slug'] = $slug;
+        Category::create($validated_data);
+        return redirect()->back()->with('message', "Category $slug Added Successfully");
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -81,6 +70,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->back()->with('message', "Categoria $category->name cancellata");
     }
 }
