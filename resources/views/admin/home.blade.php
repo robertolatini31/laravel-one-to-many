@@ -17,6 +17,9 @@
                     {{ __('You are logged in!') }}
                 </div>
             </div>
+            <div class="text-center">
+                <a class="btn btn-success mt-4" href="{{route('admin.posts.create')}}">Create Post</a>
+            </div>
         </div>
     </div>
 </div>
